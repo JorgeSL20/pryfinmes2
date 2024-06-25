@@ -7,147 +7,56 @@
         th, td {
             text-align: left;
         }
+        #form-container {
+            max-width: 500px; /* Ajustar ancho máximo */
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px; /* Agregar border-radius para suavizar esquinas */
+        }
+        #main-content {
+            text-align: center;
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container-fluid">
-        <h1 class="mt-4 mb-4">Clasificador de Pistaches con RFE</h1>
         
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <h2>Características y Rankings</h2>
-                <table class="table table-dark table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Feature</th>
-                            <th scope="col">Ranking</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>MINOR_AXIS</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>SOLIDITY</td>
-                            <td>2</td>
-                        </tr>
-                        <tr>
-                            <td>PERIMETER</td>
-                            <td>3</td>
-                        </tr>
-                        <tr>
-                            <td>ROUNDNESS</td>
-                            <td>4</td>
-                        </tr>
-                        <tr>
-                            <td>ASPECT_RATIO</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>EQDIASQ</td>
-                            <td>6</td>
-                        </tr>
-                        <tr>
-                            <td>SHAPEFACTOR_2</td>
-                            <td>7</td>
-                        </tr>
-                        <tr>
-                            <td>SHAPEFACTOR_3</td>
-                            <td>8</td>
-                        </tr>
-                        <tr>
-                            <td>ECCENTRICITY</td>
-                            <td>9</td>
-                        </tr>
-                        <tr>
-                            <td>AREA</td>
-                            <td>10</td>
-                        </tr>
-                        <tr>
-                            <td>EXTENT</td>
-                            <td>11</td>
-                        </tr>
-                        <tr>
-                            <td>SHAPEFACTOR_1</td>
-                            <td>12</td>
-                        </tr>
-                        <tr>
-                            <td>COMPACTNESS</td>
-                            <td>13</td>
-                        </tr>
-                        <tr>
-                            <td>CONVEX_AREA</td>
-                            <td>14</td>
-                        </tr>
-                        <tr>
-                            <td>SHAPEFACTOR_4</td>
-                            <td>15</td>
-                        </tr>
-                        <tr>
-                            <td>MAJOR_AXIS</td>
-                            <td>16</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div id="form-container">
+                <h5 class="mt-4 mb-4">Jorge Leonardo Seydlitz Lugo 20201175</h5>
+                <h5>Ingenieria en desarrollo y gestion de software</h5>
+                <h5>Modelo de Regresion</h5>
+                <h5>Prediccion del precio de las casas en chicago</h5>
+                <form id="formulario" onsubmit="clasificarPistache(event)">
+                    <div class="form-group">
+                        <label for="Space">Ingresa el tamaño de la casa en pies cuadrados (Space), Rango 539.0 a 2295.0:</label>
+                        <input type="text" class="form-control" id="Space" name="Space" pattern="[0-9]+(\.[0-9]+)?" step="any" required>
+                        <div class="invalid-feedback">Por favor ingresa un número válido dentro del rango especificado.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Tax">Ingresa el importe del impuesto anual (Tax), Rango 418.0 a 2752.0:</label>
+                        <input type="text" class="form-control" id="Tax" name="Tax" pattern="[0-9]+(\.[0-9]+)?" step="any" required>
+                        <div class="invalid-feedback">Por favor ingresa un número válido dentro del rango especificado.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Lot">Ingresa el ancho de un lote (Lot), Rango 24.0 a 50.0:</label>
+                        <input type="text" class="form-control" id="Lot" name="Lot" pattern="[0-9]+(\.[0-9]+)?" step="any" required>
+                        <div class="invalid-feedback">Por favor ingresa un número válido dentro del rango especificado.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Garage">Ingresa el número de garajes (Garage), Rango 0.0 a 2.0:</label>
+                        <input type="text" class="form-control" id="Garage" name="Garage" pattern="[0-9]+(\.[0-9]+)?" step="any" required>
+                        <div class="invalid-feedback">Por favor ingresa un número válido dentro del rango especificado.</div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Predecir precio</button>
+                </form>
+                <p id="resultado" class="mt-3"></p>
             </div>
-            
-            <div class="col-md-6 mb-4">
-                <h2>Muestras de Pistaches</h2>
-                <table class="table table-dark table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">MINOR_AXIS</th>
-                            <th scope="col">SOLIDITY</th>
-                            <th scope="col">SHAPEFACTOR_1</th>
-                            <th scope="col">Class</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>217.7261</td>
-                            <td>0.9424</td>
-                            <td>0.0061</td>
-                            <td>Kirmizi_Pistachio</td>
-                        </tr>
-                        <tr>
-                            <td>251.9546</td>
-                            <td>0.9641</td>
-                            <td>0.0052</td>
-                            <td>Siit_Pistachio</td>
-                        </tr>
-                        <tr>
-                            <td>209.1255</td>
-                            <td>0.9465</td>
-                            <td>0.0063</td>
-                            <td>Kirmizi_Pistachio</td>
-                        </tr>
-                        <tr>
-                            <td>221.2136</td>
-                            <td>0.9437</td>
-                            <td>0.0059</td>
-                            <td>Kirmizi_Pistachio</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <h2>Formulario de Clasificación</h2>
-        <form id="formulario" onsubmit="clasificarPistache(event)">
-            <div class="form-group">
-                <label for="MINOR_AXIS">Ingresa el eje menor del pistache:</label>
-                <input type="text" class="form-control" id="MINOR_AXIS" name="MINOR_AXIS">
-            </div>
-            <div class="form-group">
-                <label for="SOLIDITY">Ingresa la solidez del pistache:</label>
-                <input type="text" class="form-control" id="SOLIDITY" name="SOLIDITY">
-            </div>
-            <button type="submit" class="btn btn-primary">Obtener Resultado</button>
-        </form>
-        <p id="resultado" class="mt-3"></p>
-
-        <button onclick="window.location.href='https://www.ejemplo.com/random_forest';" class="btn btn-success mt-3">Random Forest</button>
+        
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -156,28 +65,52 @@
     <script>
         function clasificarPistache(event) {
             event.preventDefault();
-            const MINOR_AXIS = document.getElementById('MINOR_AXIS').value;
-            const SOLIDITY = document.getElementById('SOLIDITY').value;
+            const Space = document.getElementById('Space').value;
+            const Tax = document.getElementById('Tax').value;
+            const Lot = document.getElementById('Lot').value;
+            const Garage = document.getElementById('Garage').value;
+
+            // Validación de números y rangos
+            if (!validateNumberRange(Space, 539.0, 2295.0)) {
+                return;
+            }
+            if (!validateNumberRange(Tax, 418.0, 2752.0)) {
+                return;
+            }
+            if (!validateNumberRange(Lot, 24.0, 50.0)) {
+                return;
+            }
+            if (!validateNumberRange(Garage, 0.0, 2.0)) {
+                return;
+            }
 
             fetch('/predict', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: `MINOR_AXIS=${MINOR_AXIS}&SOLIDITY=${SOLIDITY}`,
+                body: `Space=${Space}&Tax=${Tax}&Lot=${Lot}&Garage=${Garage}`,
             })
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
                     document.getElementById('resultado').innerText = 'Error: ' + data.error;
                 } else {
-                    document.getElementById('resultado').innerText = 'El tipo de pistache es ' + data.categoria;
+                    document.getElementById('resultado').innerText = 'El precio de la casa es ' + data.categoria;
                 }
             })
             .catch(error => {
                 document.getElementById('resultado').innerText = 'Error en la solicitud.';
                 console.error('Error:', error);
             });
+        }
+
+        function validateNumberRange(value, min, max) {
+            if (isNaN(value) || parseFloat(value) < min || parseFloat(value) > max) {
+                alert(`Por favor ingresa un número válido dentro del rango ${min} a ${max}.`);
+                return false;
+            }
+            return true;
         }
     </script>
 </body>

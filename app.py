@@ -23,11 +23,13 @@ def home():
 def predict():
     try:
         # Obtener los datos enviados en el request
-        MINOR_AXIS = float(request.form['MINOR_AXIS'])
-        SOLIDITY = float(request.form['SOLIDITY'])
+        Space = float(request.form['Space'])
+        Tax = float(request.form['Tax'])
+        Lot = float(request.form['Lot'])
+        Garage = float(request.form['Garage'])
         
         # Escalar los datos de entrada automáticamente
-        input_data = pd.DataFrame([[MINOR_AXIS, SOLIDITY]], columns=['MINOR_AXIS', 'SOLIDITY'])
+        input_data = pd.DataFrame([[Space, Tax, Lot, Garage]], columns=['Space', 'Tax', 'Lot', 'Garage'])
         input_data_scaled = scaler.transform(input_data)
         
         # Realizar predicciones
